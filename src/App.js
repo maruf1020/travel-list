@@ -37,6 +37,7 @@ function Form() {
 
       <input type="text" placeholder="কি কি নিব?" />
       <button>সংযুক্ত কর</button>
+      <br />
     </form>
   )
 }
