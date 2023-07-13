@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const initialItems = [
   { id: 1, description: "পাসপোর্ট", quantity: 2, packed: false },
   { id: 2, description: "মোজা", quantity: 12, packed: false },
@@ -5,6 +7,10 @@ const initialItems = [
   { id: 4, description: "প্যান্ট", quantity: 7, packed: false },
   { id: 5, description: "দাত ব্রাশ", quantity: 2, packed: true },
 ];
+
+function eBengali(x) {
+  return x.toLocaleString('bn-BN');
+}
 
 export default function App() {
   return (
@@ -23,21 +29,37 @@ function Logo() {
 }
 
 function Form() {
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
+
+
   function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
+
+    if (description === "") return;
+
+    const newItem = { id: Date.now(), description, quantity, packed: false };
+    console.log(newItem);
+
+    setQuantity(1);
+    setDescription("");
   }
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>ট্যুরে কি কি নিব?😍</h3>
-      <select>
+      <select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
         {Array.from({ length: 20 }, (_, i) => i + 1).map((number) => {
-          return <option value={number} key={number}>{number}</option>
+          return <option value={number} key={number}>{eBengali(number)}</option>
         })}
       </select>
 
-      <input type="text" placeholder="কি কি নিব?" />
+      <input
+        type="text"
+        placeholder="কি নিব?"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)} />
       <button>সংযুক্ত কর</button>
-      <br />
     </form>
   )
 }
@@ -55,7 +77,7 @@ function Item({ item }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
-        {item.description} ({item.quantity})
+        {item.description} ({eBengali(item.quantity)})
       </span>
       <button>❌</button>
     </li>
