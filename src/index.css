@@ -28,6 +28,7 @@ const initialItems = [
 }
 
 html {
+  transform: scale(.9);
   font-size: 62.5%;
 }
 
